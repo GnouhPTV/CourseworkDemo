@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect } from 'react';
+import Database from './Database';
+import DetailScreen from './screens/DetailScreen';
+import EntryScreen from './screens/EntryScreen';
+import HomeScreen from './screens/HomeScreen';
+import UpdateScreen from './screens/UpdateScreen';
+import SearchScreen from './screens/SearchScreen';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
+  useEffect(() => {
+    Database.initDatabase();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Hike List">
+        <Stack.Screen name="Hike List" component={HomeScreen} />
+        <Stack.Screen name="Add new Hike" component={EntryScreen} />
+        <Stack.Screen name="Hike Detail" component={DetailScreen} />
+        <Stack.Screen name="Update Hike" component={UpdateScreen} />
+        <Stack.Screen name="Search Hike" component={SearchScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
