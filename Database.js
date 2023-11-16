@@ -15,7 +15,7 @@ const db = SQLite.openDatabase(
 const initDatabase = () => {
   db.transaction((tx) => {
     tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS todos (
+      `CREATE TABLE IF NOT EXISTS hikes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         location TEXT,
@@ -32,11 +32,11 @@ const initDatabase = () => {
   });
 };
 
-const addTodo = (name, location, date, park, length, level, des) => {
+const addHike = (name, location, date, park, length, level, des) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'INSERT INTO todos (name, location, date, park, length, level, des) VALUES (?, ?, ?, ?, ?, ? ,?)',
+        'INSERT INTO hikes (name, location, date, park, length, level, des) VALUES (?, ?, ?, ?, ?, ? ,?)',
         [name, location, date, park, length, level, des],
         (_, { insertId }) => {
           resolve(insertId);
@@ -49,10 +49,10 @@ const addTodo = (name, location, date, park, length, level, des) => {
   });
 };
 
-const deleteAllTodo = () => {
+const deleteAllHike = () => {
   db.transaction((tx) => {
     tx.executeSql(
-      `DELETE FROM todos`,
+      `DELETE FROM hikes`,
       [],
       () => console.log('Delete Successfully'),
       (error) => console.log('Error Deleteed.', error)
@@ -60,11 +60,11 @@ const deleteAllTodo = () => {
   });
 };
 
-const getTodos = () => {
+const getHikes = () => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM todos',
+        'SELECT * FROM hikes',
         [],
         (_, { rows }) => {
           resolve(rows._array);
@@ -77,11 +77,11 @@ const getTodos = () => {
   });
 };
 
-const updateTodo = (id, name, location, date, park, length, level, des) => {
+const updateHike = (id, name, location, date, park, length, level, des) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `UPDATE todos SET name = ?, location = ?, date = ?, park = ?, length = ?, level = ?, des = ? WHERE id = ?`,
+        `UPDATE hikes SET name = ?, location = ?, date = ?, park = ?, length = ?, level = ?, des = ? WHERE id = ?`,
         [name, location, date, park, length, level, des, id],
         (_, { updateId }) => {
           resolve(updateId);
@@ -94,11 +94,11 @@ const updateTodo = (id, name, location, date, park, length, level, des) => {
   });
 };
 
-const deleteTodo = (id) => {
+const deleteHike = (id) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'DELETE FROM todos WHERE id = ?',
+        'DELETE FROM hikes WHERE id = ?',
         [id],
         () => {
           resolve();
@@ -113,11 +113,11 @@ const deleteTodo = (id) => {
 
 const Database = {
   initDatabase,
-  addTodo,
-  getTodos,
-  updateTodo,
-  deleteTodo,
-  deleteAllTodo,
+  addHike,
+  getHikes,
+  updateHike,
+  deleteHike,
+  deleteAllHike,
 };
 
 export default Database;

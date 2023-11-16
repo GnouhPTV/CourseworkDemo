@@ -7,43 +7,40 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
-  TextBox,
-  TextInput,
-  ActivityIndicator,
 } from 'react-native';
 import Database from '../Database';
 
-const HomeScreen = ({ navigation }) => {
-  const [todos, setTodos] = useState([]);
+const HomeHike = ({ navigation }) => {
+  const [hikes, setHikes] = useState([]);
   const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await Database.getTodos();
-        setTodos(data);
+        const data = await Database.getHikes();
+        setHikes(data);
       } catch (error) {
-        console.log('Error fetching todos', error);
+        console.log('Error fetching hikes', error);
       }
     };
 
     fetchData();
   }, [isFocused]);
 
-  const handleDeleteTodo = async (id) => {
-    await Database.deleteTodo(id);
-    const data = await Database.getTodos();
-    setTodos(data);
+  const handleDeleteHike = async (id) => {
+    await Database.deleteHike(id);
+    const data = await Database.getHikes();
+    setHikes(data);
   };
 
-  const handleDeleteTodoAll = async () => {
-    Database.deleteAllTodo();
-    const data = await Database.getTodos();
-    setTodos(data);
+  const handleDeleteHikeAll = async () => {
+    Database.deleteAllHike();
+    const data = await Database.getHikes();
+    setHikes(data);
   };
 
-  const renderTodoItem = ({ item }) => (
-    <View style={styles.todoItem}>
+  const renderHikeItem = ({ item }) => (
+    <View style={styles.hikeItem}>
       <Text
         style={{
           fontSize: 15,
@@ -62,20 +59,20 @@ const HomeScreen = ({ navigation }) => {
       </Text>
       <TouchableOpacity
         style={styles.moreButton}
-        onPress={() => navigation.navigate('Hike Detail', { todo: item })}
+        onPress={() => navigation.navigate('Hike Detail', { hike: item })}
       >
         <Text style={styles.moreButtonText}>More</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.updateButton}
-        onPress={() => navigation.navigate('Update Hike', { todo: item })}
+        onPress={() => navigation.navigate('Update Hike', { hike: item })}
       >
         <Text style={styles.moreButtonText}>Update</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.deleteButton}
-        onPress={() => handleDeleteTodo(item.id)}
+        onPress={() => handleDeleteHike(item.id)}
       >
         <Text style={styles.deleteButtonText}>Delete</Text>
       </TouchableOpacity>
@@ -86,18 +83,18 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.deleteAllButton}
-        onPress={() => handleDeleteTodoAll()}
+        onPress={() => handleDeleteHikeAll()}
       >
         <Text style={styles.deleteButtonText}>Delete All</Text>
       </TouchableOpacity>
       <Text style={{ fontSize: 25 }}>This is a Hike list:</Text>
-
-      <FlatList
-        data={todos}
-        renderItem={renderTodoItem}
-        keyExtractor={(item) => item.id.toString()}
-      />
-
+      <ScrollView>
+        <FlatList
+          data={hikes}
+          renderItem={renderHikeItem}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </ScrollView>
       <View
         style={{
           flexDirection: 'row',
@@ -110,12 +107,6 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('Add new Hike')}
         >
           <Text style={styles.addButtonText}>Add Hike</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => navigation.navigate('Observations')}
-        >
-          <Text style={styles.addButtonText}>Observation</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.addButton}
@@ -134,7 +125,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
-  todoItem: {
+  hikeItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -185,4 +176,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default HomeHike;

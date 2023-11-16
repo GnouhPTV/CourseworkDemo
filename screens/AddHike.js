@@ -13,7 +13,7 @@ import {
 import Database from '../Database';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const EntryScreen = ({ navigation }) => {
+const AddHike = ({ navigation }) => {
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
@@ -42,7 +42,7 @@ const EntryScreen = ({ navigation }) => {
     }
   };
 
-  const handleAddTodo = async () => {
+  const handleAddHike = async () => {
     if (!name || !location || !date || !park || !length || !level || !des) {
       Alert.alert('Error', 'All required fields must be field');
       return;
@@ -65,7 +65,7 @@ const EntryScreen = ({ navigation }) => {
           {
             text: 'OK',
             onPress: () => {
-              Database.addTodo(name, location, date, park, length, level, des);
+              Database.addHike(name, location, date, park, length, level, des);
               navigation.goBack();
             },
           },
@@ -154,7 +154,7 @@ const EntryScreen = ({ navigation }) => {
           placeholder="Enter description"
           multiline
         />
-        <TouchableOpacity style={styles.addButton} onPress={handleAddTodo}>
+        <TouchableOpacity style={styles.addButton} onPress={handleAddHike}>
           <Text style={styles.addButtonText}>Add Hike</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -215,4 +215,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EntryScreen;
+export default AddHike;

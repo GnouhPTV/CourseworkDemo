@@ -13,7 +13,7 @@ import {
 import Database from '../Database';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const EntryScreen = ({ navigation, route }) => {
+const UpdateHike = ({ navigation, route }) => {
   const [name, setName] = useState(route.params.todo.name);
   const [location, setLocation] = useState(route.params.todo.location);
   const [date, setDate] = useState(route.params.todo.date);
@@ -41,7 +41,7 @@ const EntryScreen = ({ navigation, route }) => {
       toggleDatePicker();
     }
   };
-  const handleUpdateTodo = async () => {
+  const handleUpdateHike = async () => {
     if (!name || !location || !date || !park || !length || !level || !des) {
       Alert.alert('Error', 'All required fields must be field');
       return;
@@ -64,7 +64,7 @@ const EntryScreen = ({ navigation, route }) => {
           {
             text: 'OK',
             onPress: async () => {
-              await Database.updateTodo(
+              await Database.updateHike(
                 route.params.todo.id,
                 name,
                 location,
@@ -83,86 +83,88 @@ const EntryScreen = ({ navigation, route }) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Name:</Text>
-      <TextInput
-        style={styles.input}
-        value={name}
-        onChangeText={setName}
-        placeholder="Enter name"
-      />
+      <ScrollView>
+        <Text style={styles.label}>Name:</Text>
+        <TextInput
+          style={styles.input}
+          value={name}
+          onChangeText={setName}
+          placeholder="Enter name"
+        />
 
-      <Text style={styles.label}>Location:</Text>
-      <TextInput
-        style={styles.input}
-        value={location}
-        onChangeText={setLocation}
-        placeholder="Enter location"
-      />
-      <View>
-        <Text style={styles.label}>Date:</Text>
-        {showPicker && (
-          <DateTimePicker
-            mode="date"
-            display="spinner"
-            value={dob}
-            onChange={onChange}
-          />
-        )}
-        {!showPicker && (
-          <Pressable onPress={toggleDatePicker}>
-            <TextInput
-              style={styles.input}
-              value={date}
-              onChangeText={setDate}
-              placeholder="Enter Date"
-              editable={false}
+        <Text style={styles.label}>Location:</Text>
+        <TextInput
+          style={styles.input}
+          value={location}
+          onChangeText={setLocation}
+          placeholder="Enter location"
+        />
+        <View>
+          <Text style={styles.label}>Date:</Text>
+          {showPicker && (
+            <DateTimePicker
+              mode="date"
+              display="spinner"
+              value={dob}
+              onChange={onChange}
             />
-          </Pressable>
-        )}
-      </View>
-      <Text style={styles.label}>Parking available:</Text>
-      <View style={styles.wrapper}>
-        {['Yes', 'No'].map((parking) => (
-          <View key={parking} style={styles.parkstyle}>
-            <Text style={styles.parkstyles}>{parking}</Text>
-            <TouchableOpacity
-              style={styles.outter}
-              value={park}
-              onPress={() => setPark(parking)}
-            >
-              {park === parking && <View style={styles.inner} />}
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-      <Text style={styles.label}>Length of the hike:</Text>
-      <TextInput
-        keyboardType="numeric"
-        style={styles.input}
-        value={length}
-        onChangeText={setLength}
-        placeholder="Enter Length of the hike"
-      />
+          )}
+          {!showPicker && (
+            <Pressable onPress={toggleDatePicker}>
+              <TextInput
+                style={styles.input}
+                value={date}
+                onChangeText={setDate}
+                placeholder="Enter Date"
+                editable={false}
+              />
+            </Pressable>
+          )}
+        </View>
+        <Text style={styles.label}>Parking available:</Text>
+        <View style={styles.wrapper}>
+          {['Yes', 'No'].map((parking) => (
+            <View key={parking} style={styles.parkstyle}>
+              <Text style={styles.parkstyles}>{parking}</Text>
+              <TouchableOpacity
+                style={styles.outter}
+                value={park}
+                onPress={() => setPark(parking)}
+              >
+                {park === parking && <View style={styles.inner} />}
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+        <Text style={styles.label}>Length of the hike:</Text>
+        <TextInput
+          keyboardType="numeric"
+          style={styles.input}
+          value={length}
+          onChangeText={setLength}
+          placeholder="Enter Length of the hike"
+        />
 
-      <Text style={styles.label}>Difficlty level:</Text>
-      <TextInput
-        style={styles.input}
-        value={level}
-        onChangeText={setLevel}
-        placeholder="Enter difficult level"
-      />
+        <Text style={styles.label}>Difficlty level:</Text>
+        <TextInput
+          style={styles.input}
+          value={level}
+          onChangeText={setLevel}
+          placeholder="Enter difficult level"
+        />
 
-      <Text style={styles.label}>Description:</Text>
-      <TextInput
-        style={styles.input}
-        value={des}
-        onChangeText={setDes}
-        placeholder="Enter description"
-        multiline
-      />
-      <TouchableOpacity style={styles.addButton} onPress={handleUpdateTodo}>
-        <Text style={styles.addButtonText}>Update Hike</Text>
-      </TouchableOpacity>
+        <Text style={styles.label}>Description:</Text>
+        <TextInput
+          style={styles.input}
+          value={des}
+          onChangeText={setDes}
+          placeholder="Enter description"
+          multiline
+        />
+        <TouchableOpacity style={styles.addButton} onPress={handleUpdateHike}>
+          <Text style={styles.addButtonText}>Update Hike</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
@@ -220,4 +222,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EntryScreen;
+export default UpdateHike;

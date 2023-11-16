@@ -16,8 +16,8 @@ import Database from '../Database';
 import filter from 'lodash.filter';
 import { useIsFocused } from '@react-navigation/native';
 
-const SearchScreen = ({ navigation }) => {
-  const [todos, setTodos] = useState([]);
+const SearchHike = ({ navigation }) => {
+  const [hikes, setHikes] = useState([]);
   const isFocused = useIsFocused();
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -28,12 +28,12 @@ const SearchScreen = ({ navigation }) => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const data = await Database.getTodos();
-        setTodos(data);
+        const data = await Database.getHikes();
+        setHikes(data);
         setIsLoading(false);
         setFullData(data);
       } catch (error) {
-        console.log('Error fetching todos', error);
+        console.log('Error fetching hikes', error);
       }
     };
     fetchData();
@@ -61,7 +61,7 @@ const SearchScreen = ({ navigation }) => {
     const filteredData = filter(fullData, (user) => {
       return contains(user, formattedQuery);
     });
-    setTodos(filteredData);
+    setHikes(filteredData);
   };
 
   const contains = ({ name, location, date, level }, query) => {
@@ -76,11 +76,11 @@ const SearchScreen = ({ navigation }) => {
     return false;
   };
 
-  const renderTodoItem = ({ item }) => (
-    <View style={styles.todoItem}>
+  const renderHikeItem = ({ item }) => (
+    <View style={styles.hikeItem}>
       <TouchableOpacity
         style={styles.moreButton}
-        onPress={() => navigation.navigate('Hike Detail', { todo: item })}
+        onPress={() => navigation.navigate('Hike Detail', { hike: item })}
       >
         <Text
           style={{
@@ -117,8 +117,8 @@ const SearchScreen = ({ navigation }) => {
       />
 
       <FlatList
-        data={todos}
-        renderItem={renderTodoItem}
+        data={hikes}
+        renderItem={renderHikeItem}
         keyExtractor={(item) => item.id.toString()}
       />
     </SafeAreaView>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
   },
-  todoItem: {
+  hikeItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchScreen;
+export default SearchHike;
