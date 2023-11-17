@@ -5,14 +5,16 @@
 First, create a new React Native project using the React Native CLI:
 
 ```
-npx react-native init TodoApp
-cd TodoApp
+npx react-native init CourseWorkDemo
+cd CourseWorkDemo
 ```
 
 The final folder structure will be like this:
+
 ![Alt text](image-1.png)
 
-The final Images of the application
+The final Images of the application:
+
 ![Alt text](image.png)
 
 ## Step 2: Install dependencies
@@ -21,6 +23,9 @@ Install the required dependencies for SQLite and navigation:
 
 ```
 npm install expo-sqlite @react-navigation/native @react-navigation/stack
+npx expo install @react-native-community/datetimepicker
+npm i lodash.filter
+
 ```
 
 ## Step 3: Create the database
