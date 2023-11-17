@@ -14,13 +14,13 @@ import Database from '../Database';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const UpdateHike = ({ navigation, route }) => {
-  const [name, setName] = useState(route.params.todo.name);
-  const [location, setLocation] = useState(route.params.todo.location);
-  const [date, setDate] = useState(route.params.todo.date);
-  const [park, setPark] = useState(route.params.todo.park);
-  const [length, setLength] = useState(route.params.todo.length);
-  const [level, setLevel] = useState(route.params.todo.level);
-  const [des, setDes] = useState(route.params.todo.des);
+  const [name, setName] = useState(route.params.hike.name);
+  const [location, setLocation] = useState(route.params.hike.location);
+  const [date, setDate] = useState(route.params.hike.date);
+  const [park, setPark] = useState(route.params.hike.park);
+  const [length, setLength] = useState(route.params.hike.length);
+  const [level, setLevel] = useState(route.params.hike.level);
+  const [des, setDes] = useState(route.params.hike.des);
 
   const [dob, setDOB] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
@@ -65,7 +65,7 @@ const UpdateHike = ({ navigation, route }) => {
             text: 'OK',
             onPress: async () => {
               await Database.updateHike(
-                route.params.todo.id,
+                route.params.hike.id,
                 name,
                 location,
                 date,
