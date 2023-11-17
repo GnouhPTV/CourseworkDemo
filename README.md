@@ -11,6 +11,7 @@ cd TodoApp
 
 The final folder structure will be like this:
 ![Alt text](image-1.png)
+
 The final Images of the application
 ![Alt text](image.png)
 
